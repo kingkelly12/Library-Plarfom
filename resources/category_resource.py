@@ -20,18 +20,51 @@ class CategoryResource:
         return True
 
     @staticmethod
-    def list():
-        pass
+    def list(self: Category):
+        with get_connection() as conn, conn.cursor() as cur:
+            cur.execute("""
+                SELECT * FROM categories
+            """)
+            rows = cur.fetchall()
+            for row in rows:
+                print(row)
+        return rows
 
     @staticmethod
-    def update():
-        pass
+    def update(self: Category):
+        with get_connection() as conn, conn.cursor() as cur:
+            cur.execute("""
+                UPDATE categories
+                SET title = %s, description = %s
+                WHERE id = %s
+            """,
+            (self.title, self.description, self.id)
+            )
+            print(f"{self.title} has been updated successfully!!")
+        return True
 
     @staticmethod
-    def delete():
-        pass
+    def delete(self: Category):
+        with get_connection() as conn, conn.cursor() as cur:
+            cur.execute("""
+                DELETE FROM categories
+                WHERE id = %s
+            """,
+            (self.id,)
+            )
+            print(f"{self.title} has been deleted successfully!!")
+        return True
 
     @staticmethod
-    def listone():
-        pass
+    def listone(self: Category):
+        with get_connection() as conn, conn.cursor() as cur:
+            cur.execute("""
+                SELECT * FROM categories
+                WHERE id = %s
+            """,
+            (self.id,)
+            )
+            row = cur.fetchone()
+            print(row)
+        return row      
 

@@ -14,3 +14,4 @@ DB_CONF = {
     "user": os.getenv("PGUSER"),
     "password": os.getenv("PGPASSWORD"),
 }
+
